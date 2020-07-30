@@ -146,7 +146,7 @@ jQuery(document).ready(function($) {
 				nav: true,
 				dots: true,
 				navText: ['<span class="icon-arrow_back">', '<span class="icon-arrow_forward">'],
-				smartSpeed: 500
+				smartSpeed: 700
 			});
 		}
 
@@ -181,7 +181,7 @@ jQuery(document).ready(function($) {
 		    center: false,
 		    items: 2,
 		    loop: true,
-				stagePadding: 0,
+			stagePadding: 0,
 		    margin: 30,
 		    autoplay: false,
 		    nav: true,
