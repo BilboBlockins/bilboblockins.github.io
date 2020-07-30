@@ -297,7 +297,7 @@
   .header-top {
 	  > .container {
 			padding-top: 30px;
-			padding-bottom: 30px;
+			padding-bottom: 0px;
 	  }
 
 	  .quick-contact-icons {
@@ -337,9 +337,9 @@
 
 .section-title {
 	color: $black;
-	margin-bottom: 50px;
+	margin-bottom: 15px;
 	h2 {
-		font-size: 20px;
+		font-size: 10px;
 		font-weight: 400;
 		border-bottom: 1px solid #222;
 		position: relative;

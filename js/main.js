@@ -142,11 +142,11 @@ jQuery(document).ready(function($) {
 				items: 1,
 				loop: true,
 				margin: 0,
-				autoplay: true,
+				autoplay: false,
 				nav: true,
 				dots: true,
 				navText: ['<span class="icon-arrow_back">', '<span class="icon-arrow_forward">'],
-				smartSpeed: 1000
+				smartSpeed: 500
 			});
 		}
 
@@ -157,7 +157,7 @@ jQuery(document).ready(function($) {
 				loop: true,
 				stagePadding: 0,
 				margin: 30,
-				autoplay: true,
+				autoplay: false,
 				smartSpeed: 500,
 				nav: true,
 				dots: true,
@@ -183,7 +183,7 @@ jQuery(document).ready(function($) {
 		    loop: true,
 				stagePadding: 0,
 		    margin: 30,
-		    autoplay: true,
+		    autoplay: false,
 		    nav: true,
 				navText: ['<span class="icon-arrow_back">', '<span class="icon-arrow_forward">'],
 		    responsive:{
