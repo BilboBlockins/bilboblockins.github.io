@@ -14,32 +14,6 @@
   let faceMatcher = null
   let inputSize = 512
   let scoreThreshold = 0.5
-  let detOptions = new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold})
-// async function uploadRefImage(e) {
-//   const imgFile = $('#refImgUploadInput').get(0).files[0]
-//   const img = await faceapi.bufferToImage(imgFile)
-//   $('#refImg').get(0).src = img.src
-//   updateReferenceImageResults()
-// }
-
-// async function loadRefImageFromUrl(url) {
-//   const img = await requestExternalImage($('#refImgUrlInput').val())
-//   $('#refImg').get(0).src = img.src
-//   updateReferenceImageResults()
-// }
-
-// async function uploadQueryImage(e) {
-//   const imgFile = $('#queryImgUploadInput').get(0).files[0]
-//   const img = await faceapi.bufferToImage(imgFile)
-//   $('#queryImg').get(0).src = img.src
-//   updateQueryImageResults()
-// }
-
-// async function loadQueryImageFromUrl(url) {
-//   const img = await requestExternalImage($('#queryImgUrlInput').val())
-//   $('#queryImg').get(0).src = img.src
-//   updateQueryImageResults()
-// }
 
 async function updateReferenceImageResults() {
   const inputImgEl = document.querySelector('#refImg')
@@ -55,16 +29,8 @@ async function updateReferenceImageResults() {
   }
   console.log(fullFaceDescription)
 
-  // create FaceMatcher with automatically assigned labels
-  // from the detection results for the reference image
   faceMatcher = new faceapi.FaceMatcher(fullFaceDescription)
   console.log(faceMatcher)
-
-  // fullFaceDescriptions.forEach(({ detection, descriptor }) => {
-  //   console.log(descriptor)
-  //   const label = faceMatcher.findBestMatch(descriptor).toString()
-  //   console.log(label)
-  // })
 }
 
 
@@ -81,16 +47,8 @@ async function updateQueryImageResults() {
     .withFaceDescriptor()
 
   console.log(result);
-  const distance = faceMatcher.computeMeanDistance(result, faceMatcher.labeledDescriptors[0].descriptors)
+  const distance = faceMatcher.computeMeanDistance(result.descriptor, faceMatcher.labeledDescriptors[0].descriptors)
   console.log('query distance: ', distance)
-
-  // results.forEach(({ detection, descriptor }) => {
-  //   console.log(descriptor)
-  //   const label = faceMatcher.findBestMatch(descriptor).toString()
-  //   const distance = faceMatcher.computeMeanDistance(descriptor, faceMatcher.labeledDescriptors[0].descriptors)
-  //   console.log('query distance: ', distance)
-  //   console.log(label)
-  // })
 
 }
 
