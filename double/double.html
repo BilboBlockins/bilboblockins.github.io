@@ -50,7 +50,7 @@ async function updateReferenceImageResults() {
     .withFaceLandmarks()
     .withFaceDescriptor()
 
-  if (!fullFaceDescriptions.length) {
+  if (!fullFaceDescription) {
     return
   }
   console.log(fullFaceDescription)
