@@ -63,7 +63,7 @@ async function updateReferenceImageResults() {
   fullFaceDescriptions.forEach(({ detection, descriptor }) => {
     const label = faceMatcher.findBestMatch(descriptor).toString()
     console.log(label)
-  }
+  })
 }
 
 async function updateQueryImageResults() {
