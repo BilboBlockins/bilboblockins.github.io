@@ -98,9 +98,19 @@ async function updateResults() {
   await updateReferenceImageResults()
   await updateQueryImageResults()
 }
+//minConfidence = Math.min(faceapi.utils.round(minConfidence + 0.1), 1.0) //increase
+//minConfidence = Math.max(faceapi.utils.round(minConfidence - 0.1), 0.1) //decrease
+//scoreThreshold = Math.min(faceapi.utils.round(scoreThreshold + 0.1), 1.0)
+
 
 async function run() {
   // load face detection, face landmark model and face recognition models
+
+  let options = new faceapi.TinyFaceDetectorOptions({ inputSize: 512 , scoreThreshold: 0.5 })
+  console.log(options)
+  console.log(faceapi.nets.tinyFaceDetector)
+  //getCurrentFaceDetectionNet
+
   await changeFaceDetector(selectedFaceDetector)
   await faceapi.loadFaceLandmarkModel('/')
   await faceapi.loadFaceRecognitionModel('/')
