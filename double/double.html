@@ -99,6 +99,7 @@ async function run() {
   let currentNet = faceapi.nets.tinyFaceDetector
   console.log(currentNet)
   // load face detection, face landmark model and face recognition models
+  await faceapi.loadTinyFaceDetectorModel('/double/weights/')
   await faceapi.loadFaceLandmarkModel('/double/weights/')
   await faceapi.loadFaceRecognitionModel('/double/weights/')
   updateResults()
