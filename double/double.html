@@ -96,6 +96,8 @@ async function updateResults() {
 //scoreThreshold = Math.min(faceapi.utils.round(scoreThreshold + 0.1), 1.0)
 
 async function run() {
+  let currentNet = faceapi.nets.tinyFaceDetector
+  console.log(currentNet)
   // load face detection, face landmark model and face recognition models
   await faceapi.loadFaceLandmarkModel('/double/weights/')
   await faceapi.loadFaceRecognitionModel('/double/weights/')
