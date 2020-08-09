@@ -2,70 +2,68 @@
 <html>
 <head>
   <script src="js/face-api.js"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 </head>
 <body>
+  <div>Ref Image:</div>
+    <img id="refImg" src="images/doubles/133994.jpg" alt="">
+  <div>Query Image:</div>
+    <img id="queryImg" src="images/doubles/160748.jpg" alt="">
 </body>
 <script>
   let faceMatcher = null
+  let inputSize = 512
+  let scoreThreshold = 0.5
+  let detOptions = new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold})
+// async function uploadRefImage(e) {
+//   const imgFile = $('#refImgUploadInput').get(0).files[0]
+//   const img = await faceapi.bufferToImage(imgFile)
+//   $('#refImg').get(0).src = img.src
+//   updateReferenceImageResults()
+// }
 
-async function uploadRefImage(e) {
-  const imgFile = $('#refImgUploadInput').get(0).files[0]
-  const img = await faceapi.bufferToImage(imgFile)
-  $('#refImg').get(0).src = img.src
-  updateReferenceImageResults()
-}
+// async function loadRefImageFromUrl(url) {
+//   const img = await requestExternalImage($('#refImgUrlInput').val())
+//   $('#refImg').get(0).src = img.src
+//   updateReferenceImageResults()
+// }
 
-async function loadRefImageFromUrl(url) {
-  const img = await requestExternalImage($('#refImgUrlInput').val())
-  $('#refImg').get(0).src = img.src
-  updateReferenceImageResults()
-}
+// async function uploadQueryImage(e) {
+//   const imgFile = $('#queryImgUploadInput').get(0).files[0]
+//   const img = await faceapi.bufferToImage(imgFile)
+//   $('#queryImg').get(0).src = img.src
+//   updateQueryImageResults()
+// }
 
-async function uploadQueryImage(e) {
-  const imgFile = $('#queryImgUploadInput').get(0).files[0]
-  const img = await faceapi.bufferToImage(imgFile)
-  $('#queryImg').get(0).src = img.src
-  updateQueryImageResults()
-}
-
-async function loadQueryImageFromUrl(url) {
-  const img = await requestExternalImage($('#queryImgUrlInput').val())
-  $('#queryImg').get(0).src = img.src
-  updateQueryImageResults()
-}
+// async function loadQueryImageFromUrl(url) {
+//   const img = await requestExternalImage($('#queryImgUrlInput').val())
+//   $('#queryImg').get(0).src = img.src
+//   updateQueryImageResults()
+// }
 
 async function updateReferenceImageResults() {
-  const inputImgEl = $('#refImg').get(0)
-  const canvas = $('#refImgOverlay').get(0)
+  const inputImgEl = document.querySelector('#refImg')
+  //const canvas = $('#refImgOverlay').get(0)
 
   const fullFaceDescriptions = await faceapi
-    .detectAllFaces(inputImgEl, getFaceDetectorOptions())
+    .detectAllFaces(inputImgEl, detOptions)
     .withFaceLandmarks()
     .withFaceDescriptors()
 
   if (!fullFaceDescriptions.length) {
     return
   }
+  console.log(fullFaceDescriptions)
 
   // create FaceMatcher with automatically assigned labels
   // from the detection results for the reference image
   faceMatcher = new faceapi.FaceMatcher(fullFaceDescriptions)
+  console.log(faceMatcher)
 
-  faceapi.matchDimensions(canvas, inputImgEl)
-  // resize detection and landmarks in case displayed image is smaller than
-  // original size
-  const resizedResults = faceapi.resizeResults(fullFaceDescriptions, inputImgEl)
-  // draw boxes with the corresponding label as text
-  const labels = faceMatcher.labeledDescriptors
-    .map(ld => ld.label)
-  resizedResults.forEach(({ detection, descriptor }) => {
+  fullFaceDescriptions.forEach(({ detection, descriptor }) => {
     const label = faceMatcher.findBestMatch(descriptor).toString()
-    const options = { label }
-    const drawBox = new faceapi.draw.DrawBox(detection.box, options)
-    drawBox.draw(canvas)
-  })
+    console.log(label)
+  }
 }
 
 async function updateQueryImageResults() {
@@ -73,25 +71,20 @@ async function updateQueryImageResults() {
     return
   }
 
-  const inputImgEl = $('#queryImg').get(0)
-  const canvas = $('#queryImgOverlay').get(0)
+  const inputImgEl = document.querySelector('#queryImg')
 
   const results = await faceapi
-    .detectAllFaces(inputImgEl, getFaceDetectorOptions())
+    .detectAllFaces(inputImgEl, detOptions)
     .withFaceLandmarks()
     .withFaceDescriptors()
 
-  faceapi.matchDimensions(canvas, inputImgEl)
-  // resize detection and landmarks in case displayed image is smaller than
-  // original size
-  const resizedResults = faceapi.resizeResults(results, inputImgEl)
+  console.log(results);
 
-  resizedResults.forEach(({ detection, descriptor }) => {
+  results.forEach(({ detection, descriptor }) => {
     const label = faceMatcher.findBestMatch(descriptor).toString()
-    const options = { label }
-    const drawBox = new faceapi.draw.DrawBox(detection.box, options)
-    drawBox.draw(canvas)
+    console.log(label)
   })
+
 }
 
 async function updateResults() {
@@ -102,14 +95,8 @@ async function updateResults() {
 //minConfidence = Math.max(faceapi.utils.round(minConfidence - 0.1), 0.1) //decrease
 //scoreThreshold = Math.min(faceapi.utils.round(scoreThreshold + 0.1), 1.0)
 
-
 async function run() {
   // load face detection, face landmark model and face recognition models
-
-  let options = new faceapi.TinyFaceDetectorOptions({ inputSize: 512 , scoreThreshold: 0.5 })
-  console.log(options)
-  console.log(faceapi.nets.tinyFaceDetector)
-
   await faceapi.loadFaceLandmarkModel('/double/weights/')
   await faceapi.loadFaceRecognitionModel('/double/weights/')
 }
