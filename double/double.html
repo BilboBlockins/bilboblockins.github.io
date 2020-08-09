@@ -62,10 +62,13 @@ async function switchPicture() {
   const doubleData = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
   console.log(doubleData)
   const inputImgEl = document.querySelector('#refImg')
-  setInterval(() => {
+  // setInterval(() => {
 
-  }, 1000)
+  // }, 1000)
 }
+
+switchPicture()
+
 //minConfidence = Math.min(faceapi.utils.round(minConfidence + 0.1), 1.0) //increase
 //minConfidence = Math.max(faceapi.utils.round(minConfidence - 0.1), 0.1) //decrease
 //scoreThreshold = Math.min(faceapi.utils.round(scoreThreshold + 0.1), 1.0)
