@@ -48,7 +48,7 @@ async function updateReferenceImageResults() {
   const fullFaceDescription = await faceapi
     .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
     // .withFaceLandmarks()
-    .withFaceDescriptors()
+    .withFaceDescriptor()
 
   if (!fullFaceDescriptions.length) {
     return
@@ -78,10 +78,10 @@ async function updateQueryImageResults() {
   const result = await faceapi
     .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
     // .withFaceLandmarks()
-    .withFaceDescriptors()
+    .withFaceDescriptor()
 
   console.log(result);
-  const distance = faceMatcher.computeMeanDistance(descriptor, faceMatcher.labeledDescriptors[0].descriptors)
+  const distance = faceMatcher.computeMeanDistance(result, faceMatcher.labeledDescriptors[0].descriptors)
   console.log('query distance: ', distance)
 
   // results.forEach(({ detection, descriptor }) => {
