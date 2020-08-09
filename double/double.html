@@ -59,12 +59,18 @@ async function updateResults() {
 }
 
 async function switchPicture() {
-  const doubleData = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
+  let counter = 0
+  const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
+  const doubleData = JSON.parse(doubleRes.data)
   console.log(doubleData)
   const inputImgEl = document.querySelector('#refImg')
-  // setInterval(() => {
-
-  // }, 1000)
+  let intervalId = setInterval(() => {
+    inputImgEl.src = doubleData[counter].image_path
+    counter++;
+    if(counter === 47) {
+      clearInterval(intervalId)
+    }
+  }, 1000)
 }
 
 switchPicture()
