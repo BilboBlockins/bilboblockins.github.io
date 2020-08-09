@@ -85,7 +85,7 @@ async function updateQueryImageResults() {
   results.forEach(({ detection, descriptor }) => {
     console.log(descriptor)
     const label = faceMatcher.findBestMatch(descriptor).toString()
-    const distance = faceMatcher.computeMeanDistance(descriptor)
+    const distance = faceMatcher.computeMeanDistance(descriptor, faceMatcher.labeledDescriptors[0].descriptors)
     console.log('query distance: ', distance)
     console.log(label)
   })
