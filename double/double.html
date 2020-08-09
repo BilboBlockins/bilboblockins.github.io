@@ -61,7 +61,7 @@ async function updateResults() {
 async function switchPicture() {
   let counter = 0
   const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
-  const doubleData = JSON.parse(doubleRes.data)
+  const doubleData = doubleRes.data
   console.log(doubleData)
   const inputImgEl = document.querySelector('#refImg')
   let intervalId = setInterval(() => {
