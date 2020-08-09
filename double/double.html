@@ -2,13 +2,14 @@
 <html>
 <head>
   <script src="js/face-api.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script> -->
 </head>
 <body>
   <div>Ref Image:</div>
-    <img id="refImg" src="images/doubles/133994.jpg" alt="">
+    <img id="refImg" src="./images/doubles/133994.jpg" alt="">
   <div>Query Image:</div>
-    <img id="queryImg" src="images/doubles/160748.jpg" alt="">
+    <img id="queryImg" src="./images/doubles/160748.jpg" alt="">
 </body>
 <script>
   let faceMatcher = null
@@ -56,6 +57,15 @@ async function updateResults() {
   await updateReferenceImageResults()
   await updateQueryImageResults()
 }
+
+async function switchPicture() {
+  const doubleData = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
+  console.log(doubleData)
+  const inputImgEl = document.querySelector('#refImg')
+  setInterval(() => {
+
+  }, 1000)
+}
 //minConfidence = Math.min(faceapi.utils.round(minConfidence + 0.1), 1.0) //increase
 //minConfidence = Math.max(faceapi.utils.round(minConfidence - 0.1), 0.1) //decrease
 //scoreThreshold = Math.min(faceapi.utils.round(scoreThreshold + 0.1), 1.0)
@@ -66,9 +76,8 @@ async function run() {
   // load face detection, face landmark model and face recognition models
   await faceapi.loadTinyFaceDetectorModel('/double/weights/')
   await faceapi.loadFaceLandmarkModel('/double/weights/')
-  // await faceapi.loadTinyYolov2Model('/double/weights/')
   await faceapi.loadFaceRecognitionModel('/double/weights/')
-  updateResults()
+  // updateResults()
 }
 
 run()
