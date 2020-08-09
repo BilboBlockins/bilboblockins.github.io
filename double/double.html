@@ -8,7 +8,12 @@
 <body>
 </body>
 <script>
-    const model = await tf.loadLayersModel('https://bilboblockins.github.io/double/models/tiny_face_detector_model-weights_manifest.json')
-    console.log(model)
+
+async function run() {
+  const model = await tf.loadLayersModel('https://bilboblockins.github.io/double/models/tiny_face_detector_model-weights_manifest.json')
+  console.log(model)
+}
+
+run()
 </script>
 </html>
