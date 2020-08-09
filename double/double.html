@@ -109,9 +109,7 @@ async function run() {
   let options = new faceapi.TinyFaceDetectorOptions({ inputSize: 512 , scoreThreshold: 0.5 })
   console.log(options)
   console.log(faceapi.nets.tinyFaceDetector)
-  //getCurrentFaceDetectionNet
-
-  await changeFaceDetector(selectedFaceDetector)
+  
   await faceapi.loadFaceLandmarkModel('/')
   await faceapi.loadFaceRecognitionModel('/')
 }
