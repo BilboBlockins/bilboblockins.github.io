@@ -110,8 +110,8 @@ async function run() {
   console.log(options)
   console.log(faceapi.nets.tinyFaceDetector)
 
-  await faceapi.loadFaceLandmarkModel('/double/')
-  await faceapi.loadFaceRecognitionModel('/double/')
+  await faceapi.loadFaceLandmarkModel('/double/weights/')
+  await faceapi.loadFaceRecognitionModel('/double/weights/')
 }
 
 run()
