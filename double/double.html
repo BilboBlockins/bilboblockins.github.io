@@ -46,7 +46,7 @@ async function updateReferenceImageResults() {
   //const canvas = $('#refImgOverlay').get(0)
 
   const fullFaceDescriptions = await faceapi
-    .detectAllFaces(inputImgEl, detOptions)
+    .detectAllFaces(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
     .withFaceLandmarks()
     .withFaceDescriptors()
 
@@ -74,7 +74,7 @@ async function updateQueryImageResults() {
   const inputImgEl = document.querySelector('#queryImg')
 
   const results = await faceapi
-    .detectAllFaces(inputImgEl, detOptions)
+    .detectAllFaces(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
     .withFaceLandmarks()
     .withFaceDescriptors()
 
