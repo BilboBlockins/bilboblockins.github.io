@@ -47,7 +47,7 @@ async function updateReferenceImageResults() {
 
   const fullFaceDescription = await faceapi
     .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
-    // .withFaceLandmarks()
+    .withFaceLandmarks()
     .withFaceDescriptor()
 
   if (!fullFaceDescriptions.length) {
@@ -77,7 +77,7 @@ async function updateQueryImageResults() {
 
   const result = await faceapi
     .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
-    // .withFaceLandmarks()
+    .withFaceLandmarks()
     .withFaceDescriptor()
 
   console.log(result);
