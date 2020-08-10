@@ -31,6 +31,12 @@ async function findMatches() {
   }
 }
 
+// Output
+function output(msg) {
+  let m = document.getElementById('messages');
+  m.innerHTML = msg;
+}
+
 async function run() {
   //Load doubles model and data
   const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
