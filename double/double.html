@@ -60,7 +60,7 @@ async function updateResults() {
 async function getFaceData() {
   const faceDataOut = []
   const inputSize = 416
-  const scoreThreshold = 0.2
+  const scoreThreshold = 0.7
   const inputImgEl = document.querySelector('#refImg')
   const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
   const doubleData = doubleRes.data
