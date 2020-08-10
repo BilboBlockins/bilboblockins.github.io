@@ -60,7 +60,7 @@ async function updateResults() {
 async function getFaceData() {
   const faceDataOut = []
   const inputSize = 256
-  const scoreThreshold = 0.5
+  const scoreThreshold = 0.3
   const inputImgEl = document.querySelector('#refImg')
   const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
   const doubleData = doubleRes.data
@@ -72,6 +72,7 @@ async function getFaceData() {
       .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
       .withFaceLandmarks()
       .withFaceDescriptor()
+    console.log(faceData)
     faceDataOut.push(faceData.descriptor)
   }
   return faceDataOut
