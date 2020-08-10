@@ -1,7 +1,3 @@
-let imgEl = document.createElement('img')
-imgEl.id = 'refImg'
-imgEl.width = '320'
-
 async function getFaceData() {
     const faceDataOut = []
     const faceReadErrors = []
