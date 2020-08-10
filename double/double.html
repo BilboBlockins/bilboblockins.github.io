@@ -72,7 +72,7 @@ async function getFaceData() {
     .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
     .withFaceLandmarks()
     .withFaceDescriptor()
-    faceeData.push(faceData.descriptor)
+    faceData.push(faceData.descriptor)
   }
   return faceData
 }
@@ -91,14 +91,12 @@ function downloadJSON(obj, fileName, contentType) {
 //scoreThreshold = Math.min(faceapi.utils.round(scoreThreshold + 0.1), 1.0)
 
 async function run() {
-  // let currentNet = faceapi.nets.tinyFaceDetector
-  // console.log(currentNet)
   // load face detection, face landmark model and face recognition models
   await faceapi.loadTinyFaceDetectorModel('/double/weights/')
   await faceapi.loadFaceLandmarkModel('/double/weights/')
   await faceapi.loadFaceRecognitionModel('/double/weights/')
   
-  const doublesModel = getFaceData()
+  const doublesModel = await getFaceData()
   downloadJSON(doublesModel, 'doublesModel.json')
 }
 
