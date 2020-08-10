@@ -7,7 +7,7 @@
 </head>
 <body>
   <div>Ref Image:</div>
-    <img id="refImg" width="416" src="">
+    <img id="refImg" width="320" src="">
   <!-- <div>Query Image:</div>
     <img id="queryImg" src="./images/doubles/160748.jpg" alt=""> -->
 </body>
@@ -59,8 +59,8 @@ async function updateResults() {
 
 async function getFaceData() {
   const faceDataOut = []
-  const inputSize = 416
-  const scoreThreshold = 0.7
+  const inputSize = 320
+  const scoreThreshold = 0.2
   const inputImgEl = document.querySelector('#refImg')
   const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
   const doubleData = doubleRes.data
