@@ -18,16 +18,23 @@ async function warmUp() {
 
 async function findMatches() {
   const inputImgEl = document.getElementById('file-image')
+  const outputImgEl = document.getElementById('resultsImg')
   const result = await faceapi
     .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
     .withFaceLandmarks()
     .withFaceDescriptor()
-  console.log(result)
-  let faceMatcher = new faceapi.FaceMatcher([result])
   if(result) {
-    const dist = faceapi.euclideanDistance(result.descriptor, doubleModelData[0])
-    // const distance = faceMatcher.computeMeanDistance(result.descriptor, [doubleModelData[0]])
-    console.log('query distance: ', dist)
+    let distArray = []
+    const modelLen = doubleModelData.length
+    for(let i=0; i<modelLen; i++) {
+      let dist = faceapi.euclideanDistance(result.descriptor, doubleModelData[i])
+      distArray.push(dist)
+    }
+    const minDist = Math.min(...distArray)
+    const minIndex = distArray.indexOf(minDist)
+    const minMatch = doubleData[minIndex]
+    output(`Looks like the closest match is `, minMatch.name)
+    outputImgEl.src = './' + minMatch.image_path
   } else {
     output('Sorry, couldn\'t find a face in that one.')
   }
