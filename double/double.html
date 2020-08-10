@@ -38,23 +38,40 @@
     <img id="queryImg" src="./images/doubles/160748.jpg" alt=""> -->
 </body>
 <script>
-let faceMatcher = null
+//Load doubles model and data
+const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
+const doubleModelRes = await axios.get('https://bilboblockins.github.io/double/data/doubles_model.json')
+const doubleData = doubleRes.data
+const doubleModelData = doubleRes.data
+const inputSize = 320
+const scoreThreshold = .2
 
-async function findMatch() {
-  if (!faceMatcher) {
-    return
-  }
-
-  const inputImgEl = document.querySelector('#queryImg')
-
+async function warmUp() {
+  //upload hidden dummy image to warm up tensors for faster processing next
+  const inputImgEl = document.getElementById('file-image')
+  console.log('Warming face recognition net...')
+  console.log('Processing ', doubleData[0].name)
+  inputImgEl.src = doubleData[0].image_path
   const result = await faceapi
     .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
     .withFaceLandmarks()
     .withFaceDescriptor()
+  console.log(result)
+}
 
-  console.log(result);
-  //const distance = faceMatcher.computeMeanDistance(result.descriptor, faceMatcher.labeledDescriptors[0].descriptors)
-  console.log('query distance: ', distance)
+async function findMatches() {
+  const inputImgEl = document.getElementById('file-image')
+  const result = await faceapi
+    .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
+    .withFaceLandmarks()
+    .withFaceDescriptor()
+  console.log(result)
+  if(result) {
+    const distance = faceMatcher.computeMeanDistance(result.descriptor, [doubleModelData[0]])
+    console.log('query distance: ', distance)
+  } else {
+    output('Sorry, couldn\'t find a face in that one.')
+  }
 
 }
 
@@ -67,7 +84,7 @@ async function run() {
 
 run()
 
-
+//====================================
 //file upload js
 function ekUpload(){
   function Init() {
@@ -108,6 +125,7 @@ function ekUpload(){
   }
 
   function startMatcher() {
+    findMatches()
     setMaxProgress(48)
     let progressBar = document.getElementById('file-progress')
     let count = 0
