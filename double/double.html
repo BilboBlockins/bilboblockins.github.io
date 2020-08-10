@@ -41,7 +41,7 @@ let doubleData
 let doubleModelData
 
 async function warmUp() {
-  //upload hidden dummy image to warm up tensors for faster processing next
+  //upload hidden dummy image to warm up tensors for faster processing for upload
   const inputImgEl = document.getElementById('file-image')
   console.log('Warming face recognition net...')
   console.log('Processing ', doubleData[0].name)
@@ -79,6 +79,7 @@ async function run() {
   await faceapi.loadTinyFaceDetectorModel('/double/weights/')
   await faceapi.loadFaceLandmarkModel('/double/weights/')
   await faceapi.loadFaceRecognitionModel('/double/weights/')
+  warmUp()
 }
 
 run()
