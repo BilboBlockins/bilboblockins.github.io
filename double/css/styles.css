@@ -80,9 +80,6 @@ p {
 .uploader #file-image {
   display: inline-block;
   margin: 0 auto 0.5rem auto;
-  width: auto;
-  height: auto;
-  max-width: 180px;
 }
 .uploader #file-image.hidden {
   display: none;
