@@ -33,18 +33,12 @@
 
     </div>
 
-
-  <!-- <div>Query Image:</div>
-    <img id="queryImg" src="./images/doubles/160748.jpg" alt=""> -->
 </body>
 <script>
-//Load doubles model and data
-const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
-const doubleModelRes = await axios.get('https://bilboblockins.github.io/double/data/doubles_model.json')
-const doubleData = doubleRes.data
-const doubleModelData = doubleRes.data
-const inputSize = 320
-const scoreThreshold = .2
+let inputSize = 320
+let scoreThreshold = .2
+let doubleData
+let doubleModelData
 
 async function warmUp() {
   //upload hidden dummy image to warm up tensors for faster processing next
@@ -76,6 +70,11 @@ async function findMatches() {
 }
 
 async function run() {
+  //Load doubles model and data
+  const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
+  const doubleModelRes = await axios.get('https://bilboblockins.github.io/double/data/doubles_model.json')
+  doubleData = doubleRes.data
+  doubleModelData = doubleRes.data
   // load face detection, face landmark model and face recognition models
   await faceapi.loadTinyFaceDetectorModel('/double/weights/')
   await faceapi.loadFaceLandmarkModel('/double/weights/')
