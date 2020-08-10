@@ -23,9 +23,11 @@ async function findMatches() {
     .withFaceLandmarks()
     .withFaceDescriptor()
   console.log(result)
+  let faceMatcher = new faceapi.FaceMatcher([result])
   if(result) {
-    const distance = faceMatcher.computeMeanDistance(result.descriptor, [doubleModelData[0]])
-    console.log('query distance: ', distance)
+    const dist = faceapi.euclideanDistance(result.descriptor, doubleModelData[0])
+    // const distance = faceMatcher.computeMeanDistance(result.descriptor, [doubleModelData[0]])
+    console.log('query distance: ', dist)
   } else {
     output('Sorry, couldn\'t find a face in that one.')
   }
