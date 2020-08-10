@@ -10,7 +10,7 @@ async function getFaceData() {
     for(let i=0; i<doubleData.length; i++) {
       try {
         console.log('Processing ', doubleData[i].name, '...')
-        inputImgEl.src = doubleData[i].image_path
+        inputImgEl.src = '../' + doubleData[i].image_path
         const faceData = await faceapi
           .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
           .withFaceLandmarks()

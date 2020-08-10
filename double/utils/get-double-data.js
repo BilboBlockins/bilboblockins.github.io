@@ -13,7 +13,7 @@ stuntData.items.forEach((actor) => {
     let imageUrl = actor.primary_headshot_square
     let profileUrl = `https://www.backstage.com${actor.talent_profile_url}`
     let actorId = actor.talent_profile_id
-    let imagePath = `../images/doubles/${actorId}.jpg`
+    let imagePath = `images/doubles/${actorId}.jpg`
     let stuntActor = {
         name: actor.name,
         gender: actor.gender,

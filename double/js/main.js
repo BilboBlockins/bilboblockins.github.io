@@ -4,11 +4,11 @@ let doubleData
 let doubleModelData
 
 async function warmUp() {
-  //upload hidden dummy image to warm up tensors for faster processing for upload
+  //upload hidden dummy image to warm up tensors for faster processing on upload
   const inputImgEl = document.getElementById('file-image')
   console.log('Warming face recognition net...')
   console.log('Processing ', doubleData[0].name)
-  inputImgEl.src = doubleData[0].image_path
+  inputImgEl.src = './' + doubleData[0].image_path
   const result = await faceapi
     .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
     .withFaceLandmarks()
@@ -29,7 +29,6 @@ async function findMatches() {
   } else {
     output('Sorry, couldn\'t find a face in that one.')
   }
-
 }
 
 async function run() {
