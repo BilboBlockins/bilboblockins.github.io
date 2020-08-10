@@ -48,14 +48,6 @@ async function getFaceData() {
     const doublesModel = await getFaceData()
     console.log(doublesModel)
     downloadJSON(doublesModel, 'doubles_model.json')
-    const dist1 = faceapi.euclideanDistance(doublesModel[0], doublesModel[1])
-    const dist2 = faceapi.euclideanDistance(doublesModel[0], doublesModel[0])
-    console.log('test query dist 1', dist1)
-    console.log('test query dist 2', dist2)
-    const dist3 = faceapi.euclideanDistance(Float32Array.from(doublesModel[0]), doublesModel[1])
-    const dist4 = faceapi.euclideanDistance(Float32Array.from(doublesModel[0]), doublesModel[0])
-    console.log('test query dist 3', dist3)
-    console.log('test query dist 4', dist4)
     console.log('Finished!')
   }
   
