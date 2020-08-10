@@ -50,7 +50,6 @@ async function getFaceData() {
     await faceapi.loadFaceRecognitionModel('/double/weights/')
     
     const doublesModel = await getFaceData()
-    console.log(doublesModel)
     downloadJSON(doublesModel, 'doublesModel.json')
     console.log('Finished!')
   }
