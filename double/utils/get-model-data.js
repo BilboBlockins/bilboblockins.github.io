@@ -23,16 +23,19 @@ async function getFaceData() {
       } catch(err) {
         console.log('Error on getting ', doubleData[i].name, ' face data')
         console.log('You should remove bad double/pic from double data')
-        let err = {double: doubleData[i].name, id:doubleData[i].id}
-        faceReadErrors.push(err)
+        let error = {double: doubleData[i].name, id:doubleData[i].id}
+        faceReadErrors.push(error)
       }
-  
     }
-    console.log(faceReadErrors)
+    if(faceReadErrors.length) {
+      //if there were errors, download file of doubles to remove
+      console.log('Face read errors: ', faceReadErrors)
+      downloadJSON(faceReadErrors, 'doubles_to_remove.json')
+    }
     return faceDataOut
   }
   
-  function downloadJSON(obj, fileName, contentType) {
+  function downloadJSON(obj, fileName) {
       let jsonStr = JSON.stringify(obj)
       let a = document.createElement("a")
       let file = new Blob([jsonStr], {type: 'application/json'})
