@@ -17,7 +17,7 @@ async function getFaceData() {
           .withFaceDescriptor()
         faceDataOut.push(faceData.descriptor)
       } catch(err) {
-        console.log('Error on getting ', doubleData[i].name, ' face data')
+        console.log('Error on ', doubleData[i].name, ' face data')
         console.log('You should remove bad double/pic from double data')
         let error = {double: doubleData[i].name, id:doubleData[i].id}
         faceReadErrors.push(error)
@@ -46,7 +46,7 @@ async function getFaceData() {
     await faceapi.loadFaceRecognitionModel('/double/weights/')
     
     const doublesModel = await getFaceData()
-    downloadJSON(doublesModel, 'doublesModel.json')
+    downloadJSON(doublesModel, 'doubles_model.json')
     console.log('Finished!')
   }
   
