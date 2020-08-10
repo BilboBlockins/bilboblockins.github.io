@@ -58,7 +58,7 @@ async function updateResults() {
 }
 
 async function getFaceData() {
-  const faceData = []
+  const faceDataOut = []
   const inputSize = 256
   const scoreThreshold = 0.5
   const inputImgEl = document.querySelector('#refImg')
@@ -69,12 +69,12 @@ async function getFaceData() {
     console.log('Processing ', doubleData[i].name, '...')
     inputImgEl.src = doubleData[i].image_path
     const faceData = await faceapi
-    .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
-    .withFaceLandmarks()
-    .withFaceDescriptor()
-    faceData.push(faceData.descriptor)
+      .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
+      .withFaceLandmarks()
+      .withFaceDescriptor()
+    faceDataOut.push(faceData.descriptor)
   }
-  return faceData
+  return faceDataOut
 }
 
 function downloadJSON(obj, fileName, contentType) {
@@ -97,6 +97,7 @@ async function run() {
   await faceapi.loadFaceRecognitionModel('/double/weights/')
   
   const doublesModel = await getFaceData()
+  console.log(doublesModel)
   downloadJSON(doublesModel, 'doublesModel.json')
 }
 
