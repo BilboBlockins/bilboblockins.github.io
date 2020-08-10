@@ -7,14 +7,13 @@
 </head>
 <body>
   <div>Ref Image:</div>
-    <img id="refImg" src="./images/doubles/133994.jpg" alt="">
-  <div>Query Image:</div>
-    <img id="queryImg" src="./images/doubles/160748.jpg" alt="">
+    <img id="refImg" width="256" src="">
+  <!-- <div>Query Image:</div>
+    <img id="queryImg" src="./images/doubles/160748.jpg" alt=""> -->
 </body>
 <script>
   let faceMatcher = null
-  let inputSize = 512
-  let scoreThreshold = 0.5
+
 
 async function updateReferenceImageResults() {
   const inputImgEl = document.querySelector('#refImg')
@@ -58,35 +57,49 @@ async function updateResults() {
   await updateQueryImageResults()
 }
 
-async function switchPicture() {
-  let counter = 0
+async function getFaceData() {
+  const faceData = []
+  const inputSize = 256
+  const scoreThreshold = 0.5
+  const inputImgEl = document.querySelector('#refImg')
   const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
   const doubleData = doubleRes.data
-  console.log(doubleData)
-  const inputImgEl = document.querySelector('#refImg')
-  let intervalId = setInterval(() => {
-    inputImgEl.src = doubleData[counter].image_path
-    counter++;
-    if(counter === 47) {
-      clearInterval(intervalId)
-    }
-  }, 1000)
+
+  for(let i=0; i<doubleData.length; i++) {
+    console.log('Processing ', doubleData[i].name, '...')
+    inputImgEl.src = doubleData[i].image_path
+    const faceData = await faceapi
+    .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
+    .withFaceLandmarks()
+    .withFaceDescriptor()
+    faceeData.push(faceData.descriptor)
+  }
+  return faceData
 }
 
-switchPicture()
+function downloadJSON(obj, fileName, contentType) {
+    let jsonStr = JSON.stringify(obj)
+    let a = document.createElement("a")
+    let file = new Blob([jsonStr], {type: 'application/json'})
+    a.href = URL.createObjectURL(file)
+    a.download = fileName
+    a.click()
+}
 
 //minConfidence = Math.min(faceapi.utils.round(minConfidence + 0.1), 1.0) //increase
 //minConfidence = Math.max(faceapi.utils.round(minConfidence - 0.1), 0.1) //decrease
 //scoreThreshold = Math.min(faceapi.utils.round(scoreThreshold + 0.1), 1.0)
 
 async function run() {
-  let currentNet = faceapi.nets.tinyFaceDetector
-  console.log(currentNet)
+  // let currentNet = faceapi.nets.tinyFaceDetector
+  // console.log(currentNet)
   // load face detection, face landmark model and face recognition models
   await faceapi.loadTinyFaceDetectorModel('/double/weights/')
   await faceapi.loadFaceLandmarkModel('/double/weights/')
   await faceapi.loadFaceRecognitionModel('/double/weights/')
-  // updateResults()
+  
+  const doublesModel = getFaceData()
+  downloadJSON(doublesModel, 'doublesModel.json')
 }
 
 run()
