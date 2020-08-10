@@ -15,6 +15,7 @@ async function getFaceData() {
           .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
           .withFaceLandmarks()
           .withFaceDescriptor()
+        console.log(faceData.descriptor)
         faceDataOut.push(faceData.descriptor)
       } catch(err) {
         console.log('Error on ', doubleData[i].name, ' face data')
@@ -46,6 +47,7 @@ async function getFaceData() {
     await faceapi.loadFaceRecognitionModel('/double/weights/')
     
     const doublesModel = await getFaceData()
+    console.log(doublesModel)
     downloadJSON(doublesModel, 'doubles_model.json')
     console.log('Finished!')
   }
