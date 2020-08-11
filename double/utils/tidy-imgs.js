@@ -2,7 +2,7 @@
 //Run after getting new doubles model
 const fs = require('fs')
 const removeData = require('../data/doubles_to_remove.json')
-
+//https://bilboblockins.github.io/double/utils/get-model-data.html
 run()
 
 function run() {
