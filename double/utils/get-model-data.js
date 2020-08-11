@@ -1,6 +1,7 @@
 async function getFaceData() {
     const faceDataOut = []
     const faceReadErrors = []
+    const actorDataTidy = []
     const inputSize = 320
     const scoreThreshold = 0.2
     const inputImgEl = document.querySelector('#refImg')
@@ -15,17 +16,27 @@ async function getFaceData() {
           .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
           .withFaceLandmarks()
           .withFaceDescriptor()
-        faceDataOut.push(Array.from(faceData.descriptor))
+        if(faceData) {
+          faceDataOut.push(Array.from(faceData.descriptor))
+          actorDataTidy.push(doubleData[i])
+        } else {
+          throw 'Face not found'
+        }
       } catch(err) {
-        console.log('Error on ', doubleData[i].name, ' face data')
-        console.log('You should remove bad double/pic from double data')
-        let error = {double: doubleData[i].name, id:doubleData[i].id}
+        console.log('Error on ', doubleData[i].name)
+        console.log(err, ': you should remove bad pic and replace actors with tidy list.')
+        let error = {double: doubleData[i].name, id:doubleData[i].id, error:err}
         faceReadErrors.push(error)
       }
     }
+    if(actorDataTidy.length) {
+      //If a face wasn't found, save tidied list to update actor data
+      console.log('Saving tidied actor data...')
+      downloadJSON(actorDataTidy, 'stunt_actors_tidy.json')
+    }
     if(faceReadErrors.length) {
       //if there were errors, download file of doubles to remove
-      console.log('Face read errors: ', faceReadErrors)
+      console.log('Saving face read errors...')
       downloadJSON(faceReadErrors, 'doubles_to_remove.json')
     }
     return faceDataOut
