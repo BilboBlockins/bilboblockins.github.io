@@ -31,10 +31,12 @@ async function findMatches() {
       distArray.push(dist)
     }
     //to get min 3
-    const minValues = distArray.sort((a,b) => a-b).slice(0,3)
-    console.log(minValues)
+    // const minValues = distArray.sort((a,b) => a-b).slice(0,3)
+    // console.log(minValues)
     const minDist = Math.min(...distArray)
     const minIndex = distArray.indexOf(minDist)
+    console.log('min index: ', minIndex)
+    console.log('min dist: ', minDist)
     const minMatch = doubleData[minIndex]
     output(`Looks like the closest match is ${minMatch.name}`)
     outputImgEl.src = './' + minMatch.image_path
