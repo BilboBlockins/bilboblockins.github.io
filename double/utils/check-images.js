@@ -39,5 +39,3 @@ function checkImgs(array) {
   }
   return problems
 }
-
-
