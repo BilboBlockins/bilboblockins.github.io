@@ -30,10 +30,13 @@ async function findMatches() {
       let dist = faceapi.euclideanDistance(result.descriptor, doubleModelData[i])
       distArray.push(dist)
     }
+    //to get min 3
+    const minValues = distArray.sort((a,b) => a-b).slice(0,3)
+    console.log(minValues)
     const minDist = Math.min(...distArray)
     const minIndex = distArray.indexOf(minDist)
     const minMatch = doubleData[minIndex]
-    output(`Looks like the closest match is `, minMatch.name)
+    output(`Looks like the closest match is ${minMatch.name}`)
     outputImgEl.src = './' + minMatch.image_path
   } else {
     output('Sorry, couldn\'t find a face in that one.')
