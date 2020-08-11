@@ -12,20 +12,16 @@ async function getFaceData() {
       try {
         console.log(`${i} Processing `, doubleData[i].name, '...')
         let imgPath = '../' + doubleData[i].image_path
-        if(imageExists(imgPath)) {
-          inputImgEl.src = imgPath
-          const faceData = await faceapi
-            .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
-            .withFaceLandmarks()
-            .withFaceDescriptor()
-          if(faceData) {
-            faceDataOut.push(Array.from(faceData.descriptor))
-            actorDataTidy.push(doubleData[i])
-          } else {
-            throw 'Face not found'
-          }
+        inputImgEl.src = imgPath
+        const faceData = await faceapi
+          .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
+          .withFaceLandmarks()
+          .withFaceDescriptor()
+        if(faceData) {
+          faceDataOut.push(Array.from(faceData.descriptor))
+          actorDataTidy.push(doubleData[i])
         } else {
-          throw 'Image not found'
+          throw 'Face not found'
         }
       } catch(err) {
         console.log('Error on ', doubleData[i].name)
@@ -45,12 +41,6 @@ async function getFaceData() {
       downloadJSON(faceReadErrors, 'doubles_to_remove.json')
     }
     return faceDataOut
-  }
-
-  function imageExists(url) {
-    var img = new Image()
-    img.src = url
-    return img.height !== 0
   }
   
   function downloadJSON(obj, fileName) {
