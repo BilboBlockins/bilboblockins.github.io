@@ -83,7 +83,7 @@ function handleBadLink() {
 
 function downLoadImg(imageURL) {
   let canvas = document.getElementById("imgCanvas");
-  let cxt = canvas.getContext("2d");
+  let ctx = canvas.getContext("2d");
   let img = document.createElement("img");
   img.crossOrigin = "";
   img.onload = (e) => {
