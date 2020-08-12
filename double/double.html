@@ -78,7 +78,8 @@ function handleBadLink() {
 
 async function fetchImage(url) {
   // , responseType: 'stream'
-    const response = await axios({url, method: 'get', responseType: 'arraybuffer'})
+  // , responseType: 'arraybuffer'
+    const response = await axios({url, method: 'get', crossdomain: true })
     console.log(response)
     console.log(response.data)
     // const imageBlob = new Blob([response.data])
