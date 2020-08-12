@@ -39,6 +39,9 @@
     </div>
     <div>Results Image:</div>
     <img id="resultsImg" width="320" src="">
+    <div id='imgWrapper'>
+
+    </div>
 
     <!-- <div>test img</div> -->
     <!-- <img id="otherImg" src="https://kayceenilson.files.wordpress.com/2014/04/famous-people-bipolar-disorder-19.jpg" alt=""> -->
@@ -79,28 +82,32 @@ function handleBadLink() {
 }
 
 function downLoadImg(imageURL) {
-  downloadedImg = new Image();
-  downloadedImg.crossOrigin = "Anonymous";
+  downloadedImg = document.createElement("img");
+  downloadedImg.id = 'tempImage'
+  downloadedImg.crossOrigin = "";
   downloadedImg.addEventListener("load", imageReceived, false);
   downloadedImg.src = imageURL;
 }
 
 function imageReceived() {
+  let downloadedImg = document.getElementById('tempImage')
+  let imageBox = document.getElementById('imgWrapper')
   const imgEl = document.getElementById('file-image')
   let canvas = document.createElement("canvas");
   let context = canvas.getContext("2d");
+  imageBox.appendChild(canvas);
 
   canvas.width = downloadedImg.width;
   canvas.height = downloadedImg.height;
  
-  context.drawImage(downloadedImg, 0, 0);
-  imageBox.appendChild(canvas);
+  context.drawImage(downloadedImg, 0, 0, canvas.width, canvas.height);
+  var url = canvas.toDataURL();
   // imgEl.src = canvas.toDataURL("image/jpg")
 
   // console.log(canvas.toDataURL("image/jpg"))
 
   try {
-    localStorage.setItem("tempLinkImg", canvas.toDataURL("image/jpg"));
+    localStorage.setItem("tempLinkImg", url);
   }
   catch(err) {
     console.log("Error: " + err);
