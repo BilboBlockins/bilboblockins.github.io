@@ -40,7 +40,7 @@
     <div>Results Image:</div>
     <img id="resultsImg" width="320" src="">
     <div id='imgWrapper'>
-
+      <canvas id='imgCanvas'></canvas>
     </div>
 
     <!-- <div>test img</div> -->
@@ -82,20 +82,26 @@ function handleBadLink() {
 }
 
 function downLoadImg(imageURL) {
-  downloadedImg = document.createElement("img");
-  downloadedImg.id = 'tempImage'
-  downloadedImg.crossOrigin = "";
-  downloadedImg.addEventListener("load", imageReceived, false);
-  downloadedImg.src = imageURL;
+  let canvas = document.getElementById("imgCanvas");
+  let cxt = canvas.getContext("2d");
+  let img = document.createElement("img");
+  img.crossOrigin = "";
+  img.onload = (e) => {
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    var url = canvas.toDataURL(); // Read succeeds, canvas won't be dirty.
+  };
+  img.src = imageURL;
 }
 
 function imageReceived() {
+  console.log('in image received')
   let downloadedImg = document.getElementById('tempImage')
   let imageBox = document.getElementById('imgWrapper')
   const imgEl = document.getElementById('file-image')
   let canvas = document.createElement("canvas");
-  let context = canvas.getContext("2d");
   imageBox.appendChild(canvas);
+  let cxt = canvas.getContext("2d");
+  
 
   canvas.width = downloadedImg.width;
   canvas.height = downloadedImg.height;
