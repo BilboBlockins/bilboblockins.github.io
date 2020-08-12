@@ -37,7 +37,7 @@ async function findMatches() {
       distArray.push(dist)
     }
     //Get min values 3
-    let minDist = distArray
+    let minDist = distArray.slice()
     minDist = minDist.sort((a,b) => a-b).slice(0,3)
     console.log(minDist)
     // const minDist = Math.min(...distArray)
