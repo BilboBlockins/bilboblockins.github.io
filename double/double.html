@@ -54,12 +54,12 @@ async function handleLinkImg() {
   //let imgEl2 = document.getElementById('otherImg')
   //imgEl2.src = link
   console.log(link)
-  const img = await fetchImage(link)
+  await fetchImage(link)
   // let newImg = requestExternalImage(link)
-  // imgEl.crossOrigin = "Anonymous"
+  imgEl.crossOrigin = "Anonymous"
   imgEl.onload = updateImage()
   imgEl.onerror = handleBadLink()
-  imgEl.src = img.src
+  imgEl.src = link
   document.getElementById('file-image').classList.remove("hidden")
 }
 
@@ -67,7 +67,7 @@ function updateImage() {
   console.log('in update image')
   let input = document.getElementById('link-input')
   input.value = ''
-  findMatches()
+  // findMatches()
 }
 
 function handleBadLink() {
@@ -80,9 +80,10 @@ async function fetchImage(url) {
   // , responseType: 'stream'
     const response = await axios({url, method: 'get', responseType: 'arraybuffer'})
     console.log(response)
-    const imageBlob = new Blob([response.data])
-    console.log(imageBlob)
-    return await faceapi.bufferToImage(imageBlob)
+    console.log(response.data)
+    // const imageBlob = new Blob([response.data])
+    // console.log(imageBlob)
+    // return await faceapi.bufferToImage(imageBlob)
     //let urlCreator = window.URL || window.webkitURL;
     //let imageUrl = urlCreator.createObjectURL(this.response);
 }
