@@ -29,6 +29,13 @@
         </label>
       </form>
 
+
+      <form id="linkForm">
+        <input id="linkImgInput" placeholder="Image URL" type="text" required="">
+        <button onclick="handleLinkImg" id="linkImgBtn">Submit</button>
+      </form> 
+      
+
     </div>
     <div>Results Image:</div>
     <img id="resultsImg" width="320" src="">
@@ -36,9 +43,30 @@
 </body>
 <script src="js/main.js"></script>
 <script>
+//file link js
+
+function handleLinkImg() {
+  let link = document.getElementById('linkImgInput').value
+  console.log(link)
+  let imgCheck = new Image()
+  imgCheck.onload = changeImage(link)
+  imgCheck.onerror = handleBadLink()
+  imgCheck.src = link
+}
+
+function changeImage(link) {
+  let imgEl = document.getElementById('file-image')
+  imgEl.src = link
+  findMatches()
+}
+
+function handleBadLink() {
+  output('Sorry, that image link didn\'t work')
+}
+
 //====================================
 //file upload js
-function ekUpload(){
+function ekUpload() {
   function Init() {
 
     console.log("Upload Initialised");
