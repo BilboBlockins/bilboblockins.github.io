@@ -45,13 +45,14 @@
 <script>
 //file link js
 
-function handleLinkImg() {
+async function handleLinkImg() {
   let link = document.getElementById('link-input').value
   let imgEl = document.getElementById('file-image')
   console.log(link)
+  let newImg = requestExternalImage(link)
   imgEl.onload = updateImage()
   imgEl.onerror = handleBadLink()
-  imgEl.src = link
+  imgEl.src = newImg.src
 }
 
 function updateImage() {
@@ -63,7 +64,30 @@ function updateImage() {
 function handleBadLink() {
   let input = document.getElementById('link-input')
   input.value = ''
-  output('Sorry, that image link didn\'t work')
+  output('Sorry, that image link didn\'t work.')
+}
+
+async function requestExternalImage(imageUrl) {
+  const res = await fetch('fetch_external_image', {
+    method: 'post',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({ imageUrl })
+  })
+  if (!(res.status < 400)) {
+    console.error(res.status + ' : ' + await res.text())
+    throw new Error('failed to fetch image from url: ' + imageUrl)
+  }
+  let blob
+  try {
+    blob = await res.blob()
+    return await faceapi.bufferToImage(blob)
+  } catch (e) {
+    console.error('received blob:', blob)
+    console.error('error:', e)
+    throw new Error('failed to load image from url: ' + imageUrl)
+  }
 }
 
 //====================================
