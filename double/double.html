@@ -79,7 +79,7 @@ function handleBadLink() {
 }
 
 function downLoadImg(imageURL) {
-  downloadedImg = new Image;
+  downloadedImg = new Image();
   downloadedImg.crossOrigin = "Anonymous";
   downloadedImg.addEventListener("load", imageReceived, false);
   downloadedImg.src = imageURL;
@@ -95,9 +95,9 @@ function imageReceived() {
  
   context.drawImage(downloadedImg, 0, 0);
   imageBox.appendChild(canvas);
-  imgEl.src = canvas.toDataURL("image/jpg")
+  // imgEl.src = canvas.toDataURL("image/jpg")
 
-  console.log(canvas.toDataURL("image/jpg"))
+  // console.log(canvas.toDataURL("image/jpg"))
 
   try {
     localStorage.setItem("tempLinkImg", canvas.toDataURL("image/jpg"));
