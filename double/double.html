@@ -40,8 +40,8 @@
     <div>Results Image:</div>
     <img id="resultsImg" width="320" src="">
 
-    <div>test img</div>
-    <img id="otherImg" src="https://kayceenilson.files.wordpress.com/2014/04/famous-people-bipolar-disorder-19.jpg" alt="">
+    <!-- <div>test img</div> -->
+    <!-- <img id="otherImg" src="https://kayceenilson.files.wordpress.com/2014/04/famous-people-bipolar-disorder-19.jpg" alt=""> -->
 
 </body>
 <script src="js/main.js"></script>
@@ -54,12 +54,14 @@ async function handleLinkImg() {
   //let imgEl2 = document.getElementById('otherImg')
   //imgEl2.src = link
   console.log(link)
-  await fetchImage(link)
+
+  downLoadImg(link)
+  // await fetchImage(link)
   // let newImg = requestExternalImage(link)
-  imgEl.crossOrigin = "Anonymous"
-  imgEl.onload = updateImage()
-  imgEl.onerror = handleBadLink()
-  imgEl.src = link
+  // imgEl.crossOrigin = "Anonymous"
+  // imgEl.onload = updateImage()
+  // imgEl.onerror = handleBadLink()
+  // imgEl.src = link
   document.getElementById('file-image').classList.remove("hidden")
 }
 
@@ -74,6 +76,35 @@ function handleBadLink() {
   let input = document.getElementById('link-input')
   input.value = ''
   output('Sorry, that image link didn\'t work.')
+}
+
+function downLoadImg(url) {
+  downloadedImg = new Image;
+  downloadedImg.crossOrigin = "Anonymous";
+  downloadedImg.addEventListener("load", imageReceived, false);
+  downloadedImg.src = imageURL;
+}
+
+function imageReceived() {
+  const imgEl = document.getElementById('file-image')
+  let canvas = document.createElement("canvas");
+  let context = canvas.getContext("2d");
+
+  canvas.width = downloadedImg.width;
+  canvas.height = downloadedImg.height;
+ 
+  context.drawImage(downloadedImg, 0, 0);
+  imageBox.appendChild(canvas);
+  imgEl.src = canvas.toDataURL("image/jpg")
+
+  console.log(canvas.toDataURL("image/jpg"))
+
+  try {
+    localStorage.setItem("tempLinkImg", canvas.toDataURL("image/jpg"));
+  }
+  catch(err) {
+    console.log("Error: " + err);
+  }  
 }
 
 async function fetchImage(url) {
