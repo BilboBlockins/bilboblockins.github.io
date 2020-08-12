@@ -40,6 +40,7 @@
     <div>Results Image:</div>
     <img id="resultsImg" width="320" src="">
     <div id='imgWrapper'>
+      <img id="testImg" src="" alt="" crossorigin="anonymous">
       <canvas id='imgCanvas'></canvas>
     </div>
 
@@ -84,12 +85,16 @@ function handleBadLink() {
 function downLoadImg(imageURL) {
   let canvas = document.getElementById("imgCanvas");
   let ctx = canvas.getContext("2d");
-  let img = document.createElement("img");
-  img.crossOrigin = "";
+  let img = document.getElementById("testImg");
+  console.log('got here after vars')
   img.onload = (e) => {
+    console.log('got here before draw img')
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    console.log('got here before save url')
     var url = canvas.toDataURL(); // Read succeeds, canvas won't be dirty.
+    console.log('url: ', url)
   };
+  console.log('got before set src')
   img.src = imageURL;
 }
 
