@@ -19,6 +19,10 @@ async function warmUp() {
 async function findMatches() {
   const inputImgEl = document.getElementById('file-image')
   const outputImgEl = document.getElementById('resultsImg')
+
+  console.log('in find matches')
+  console.log(inputImgEl)
+  
   const result = await faceapi
     .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
     .withFaceLandmarks()

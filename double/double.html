@@ -41,7 +41,7 @@
     <img id="resultsImg" width="320" src="">
 
     <div>test img</div>
-    <img src="https://kayceenilson.files.wordpress.com/2014/04/famous-people-bipolar-disorder-19.jpg" alt="">
+    <img id="otherImg" src="https://kayceenilson.files.wordpress.com/2014/04/famous-people-bipolar-disorder-19.jpg" alt="">
 
 </body>
 <script src="js/main.js"></script>
@@ -51,14 +51,19 @@
 async function handleLinkImg() {
   let link = document.getElementById('link-input').value
   let imgEl = document.getElementById('file-image')
+  let imgEl2 = document.getElementById('otherImg')
+  imgEl2.src = link
   console.log(link)
   // let newImg = requestExternalImage(link)
+  imgEl.crossOrigin = "Anonymous"
   imgEl.onload = updateImage()
   imgEl.onerror = handleBadLink()
   imgEl.src = link
+  document.getElementById('file-image').classList.remove("hidden")
 }
 
 function updateImage() {
+  console.log('in update image')
   let input = document.getElementById('link-input')
   input.value = ''
   findMatches()
