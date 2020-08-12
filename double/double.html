@@ -49,16 +49,17 @@
 //file link js
 
 async function handleLinkImg() {
-  let link = document.getElementById('link-input').value
-  let imgEl = document.getElementById('file-image')
-  let imgEl2 = document.getElementById('otherImg')
-  imgEl2.src = link
+  const link = document.getElementById('link-input').value
+  const imgEl = document.getElementById('file-image')
+  //let imgEl2 = document.getElementById('otherImg')
+  //imgEl2.src = link
   console.log(link)
+  const img = await fetchImage(link)
   // let newImg = requestExternalImage(link)
-  imgEl.crossOrigin = "Anonymous"
+  // imgEl.crossOrigin = "Anonymous"
   imgEl.onload = updateImage()
   imgEl.onerror = handleBadLink()
-  imgEl.src = link
+  imgEl.src = img.src
   document.getElementById('file-image').classList.remove("hidden")
 }
 
@@ -74,6 +75,18 @@ function handleBadLink() {
   input.value = ''
   output('Sorry, that image link didn\'t work.')
 }
+
+async function fetchImage(url) {
+  // , responseType: 'stream'
+    const response = await axios({url, method: 'get', responseType: 'arraybuffer'})
+    console.log(response)
+    const imageBlob = new Blob([response.data])
+    console.log(imageBlob)
+    return await faceapi.bufferToImage(imageBlob)
+    //let urlCreator = window.URL || window.webkitURL;
+    //let imageUrl = urlCreator.createObjectURL(this.response);
+}
+
 
 async function requestExternalImage(imageUrl) {
   const res = await fetch('fetch_external_image', {
