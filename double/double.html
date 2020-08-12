@@ -29,138 +29,20 @@
         </label>
       </form>
 
-      <br>
-      <div id="linkForm">
-        <input id="link-input" placeholder="Image URL" type="text" required="">
-        <button onclick="handleLinkImg()" id="linkImgBtn">Submit</button>
-      </div> 
-      
+      <br> 
 
     </div>
-    <div>Results Image:</div>
-    <img id="resultsImg" width="320" src="">
-    <div id='imgWrapper'>
-      <img id="testImg" src="" alt="" crossorigin="anonymous">
-      <canvas id='imgCanvas'></canvas>
-    </div>
+    <div>Results Images:</div>
+    <img id="resultsImg1" width="320" src="">
+    <img id="resultsImg2" width="320" src="">
+    <img id="resultsImg3" width="320" src="">
 
     <!-- <div>test img</div> -->
-    <!-- <img id="otherImg" src="https://kayceenilson.files.wordpress.com/2014/04/famous-people-bipolar-disorder-19.jpg" alt=""> -->
 
 </body>
 <script src="js/main.js"></script>
 <script>
-//file link js
 
-async function handleLinkImg() {
-  const link = document.getElementById('link-input').value
-  const imgEl = document.getElementById('file-image')
-  //let imgEl2 = document.getElementById('otherImg')
-  //imgEl2.src = link
-  console.log(link)
-
-  downLoadImg(link)
-  // await fetchImage(link)
-  // let newImg = requestExternalImage(link)
-  // imgEl.crossOrigin = "Anonymous"
-  // imgEl.onload = updateImage()
-  // imgEl.onerror = handleBadLink()
-  // imgEl.src = link
-  document.getElementById('file-image').classList.remove("hidden")
-}
-
-function updateImage() {
-  console.log('in update image')
-  let input = document.getElementById('link-input')
-  input.value = ''
-  // findMatches()
-}
-
-function handleBadLink() {
-  let input = document.getElementById('link-input')
-  input.value = ''
-  output('Sorry, that image link didn\'t work.')
-}
-
-function downLoadImg(imageURL) {
-  let canvas = document.getElementById("imgCanvas");
-  let ctx = canvas.getContext("2d");
-  let img = document.getElementById("testImg");
-  console.log('got here after vars')
-  img.onload = (e) => {
-    console.log('got here before draw img')
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    console.log('got here before save url')
-    var url = canvas.toDataURL(); // Read succeeds, canvas won't be dirty.
-    console.log('url: ', url)
-  };
-  console.log('got before set src')
-  img.src = imageURL;
-}
-
-function imageReceived() {
-  console.log('in image received')
-  let downloadedImg = document.getElementById('tempImage')
-  let imageBox = document.getElementById('imgWrapper')
-  const imgEl = document.getElementById('file-image')
-  let canvas = document.createElement("canvas");
-  imageBox.appendChild(canvas);
-  let cxt = canvas.getContext("2d");
-  
-
-  canvas.width = downloadedImg.width;
-  canvas.height = downloadedImg.height;
- 
-  context.drawImage(downloadedImg, 0, 0, canvas.width, canvas.height);
-  var url = canvas.toDataURL();
-  // imgEl.src = canvas.toDataURL("image/jpg")
-
-  // console.log(canvas.toDataURL("image/jpg"))
-
-  try {
-    localStorage.setItem("tempLinkImg", url);
-  }
-  catch(err) {
-    console.log("Error: " + err);
-  }  
-}
-
-async function fetchImage(url) {
-  // , responseType: 'stream'
-  // , responseType: 'arraybuffer'
-    const response = await axios({url, method: 'get', crossdomain: true })
-    console.log(response)
-    console.log(response.data)
-    // const imageBlob = new Blob([response.data])
-    // console.log(imageBlob)
-    // return await faceapi.bufferToImage(imageBlob)
-    //let urlCreator = window.URL || window.webkitURL;
-    //let imageUrl = urlCreator.createObjectURL(this.response);
-}
-
-
-async function requestExternalImage(imageUrl) {
-  const res = await fetch('fetch_external_image', {
-    method: 'post',
-    headers: {
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify({ imageUrl })
-  })
-  if (!(res.status < 400)) {
-    console.error(res.status + ' : ' + await res.text())
-    throw new Error('failed to fetch image from url: ' + imageUrl)
-  }
-  let blob
-  try {
-    blob = await res.blob()
-    return await faceapi.bufferToImage(blob)
-  } catch (e) {
-    console.error('received blob:', blob)
-    console.error('error:', e)
-    throw new Error('failed to load image from url: ' + imageUrl)
-  }
-}
 
 //====================================
 //file upload js
