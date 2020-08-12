@@ -3,7 +3,7 @@ async function getFaceData() {
     const faceReadErrors = []
     const actorDataTidy = []
     const inputSize = 320
-    const scoreThreshold = 0.2
+    const scoreThreshold = 0.3
     const inputImgEl = document.querySelector('#refImg')
     const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
     const doubleData = doubleRes.data
@@ -63,4 +63,3 @@ async function getFaceData() {
   }
   
   run()
-  
