@@ -49,10 +49,10 @@ async function handleLinkImg() {
   let link = document.getElementById('link-input').value
   let imgEl = document.getElementById('file-image')
   console.log(link)
-  let newImg = requestExternalImage(link)
+  // let newImg = requestExternalImage(link)
   imgEl.onload = updateImage()
   imgEl.onerror = handleBadLink()
-  imgEl.src = newImg.src
+  imgEl.src = link
 }
 
 function updateImage() {
