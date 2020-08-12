@@ -78,7 +78,7 @@ function handleBadLink() {
   output('Sorry, that image link didn\'t work.')
 }
 
-function downLoadImg(imageUrl) {
+function downLoadImg(imageURL) {
   downloadedImg = new Image;
   downloadedImg.crossOrigin = "Anonymous";
   downloadedImg.addEventListener("load", imageReceived, false);
