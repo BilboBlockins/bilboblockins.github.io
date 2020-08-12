@@ -31,7 +31,7 @@
 
       <br>
       <div id="linkForm">
-        <input id="linkImgInput" placeholder="Image URL" type="text" required="">
+        <input id="link-input" placeholder="Image URL" type="text" required="">
         <button onclick="handleLinkImg()" id="linkImgBtn">Submit</button>
       </div> 
       
@@ -46,21 +46,23 @@
 //file link js
 
 function handleLinkImg() {
-  let link = document.getElementById('linkImgInput').value
+  let link = document.getElementById('link-input').value
+  let imgEl = document.getElementById('file-image')
   console.log(link)
-  let imgCheck = new Image()
-  imgCheck.onload = changeImage(link)
-  imgCheck.onerror = handleBadLink()
-  imgCheck.src = link
+  imgEl.onload = updateImage()
+  imgEl.onerror = handleBadLink()
+  imgEl.src = link
 }
 
-function changeImage(link) {
-  let imgEl = document.getElementById('file-image')
-  imgEl.src = link
+function updateImage() {
+  let input = document.getElementById('link-input')
+  input.value = ''
   findMatches()
 }
 
 function handleBadLink() {
+  let input = document.getElementById('link-input')
+  input.value = ''
   output('Sorry, that image link didn\'t work')
 }
 

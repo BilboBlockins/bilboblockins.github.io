@@ -165,7 +165,7 @@ progress[value]::-webkit-progress-value {
 
 /* url form styles */
 
-#linkImgInput::-webkit-input-placeholder, #linkImgBtn {
+#link-input::-webkit-input-placeholder, #linkImgBtn {
   font-family: 'roboto', sans-serif;
 }
 h1 {
@@ -190,7 +190,7 @@ h1 {
   box-sizing: border-box;
   padding: 20px;
 }
-#linkImgInput {
+#link-input {
   margin: 40px 25px;
   width: 200px;
   display: block;
@@ -204,16 +204,14 @@ h1 {
   background-repeat: no-repeat;
   color: #0e6252;
 }
-#linkImgInput:focus, #linkImgInput:valid {
+#link-input:focus, #linkImgInput:valid {
   box-shadow: none;
   outline: none;
   background-position: 0 0;
 }
-#linkImgInput:focus::-webkit-input-placeholder, #linkImgInput:valid::-webkit-input-placeholder {
+#link-input:focus::-webkit-input-placeholder, #link-input:valid::-webkit-input-placeholder {
   color: #1abc9c;
   font-size: 11px;
-  transform: translateY(-20px);
-  visibility: visible;
 }
 #linkImgBtn {
   border: none;
