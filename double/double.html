@@ -93,11 +93,6 @@ function ekUpload() {
     }
   }
 
-  function setMaxProgress(num) {
-    let progressBar = document.getElementById('file-progress')
-    progressBar.max = num
-  }
-
   // Check for the various File API support.
   if (window.File && window.FileList && window.FileReader) {
     Init();

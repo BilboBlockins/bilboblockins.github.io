@@ -58,8 +58,13 @@ async function findMatches() {
 }
 
 function output(msg) {
-  let m = document.getElementById('messages');
-  m.innerHTML = msg;
+  let m = document.getElementById('messages')
+  m.innerHTML = msg
+}
+
+function setMaxProgress(num) {
+  let progressBar = document.getElementById('file-progress')
+  progressBar.max = num
 }
 
 async function run() {
