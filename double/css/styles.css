@@ -1,5 +1,3 @@
-@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css');
-@import url('https://fonts.googleapis.com/css?family=Roboto');
 html, body {
   font-size: 16px;
 }
@@ -109,30 +107,21 @@ p {
   /* Reset the default appearance */
   -webkit-appearance: none;
   appearance: none;
-  /* background: lightgreen; */
-  /* border-radius: 4px; */
+  background-color: lightgreen;
+  border-radius: 2px;
   width: 200px;
-  height: 18px;
+  height: 8px;
 }
 
 progress[value]::-webkit-progress-bar {
-  background-color: #eee;
+  background-color: lightgreen;
   border-radius: 2px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
 progress[value]::-webkit-progress-value {
-  background-image:
-	   -webkit-linear-gradient(-45deg, 
-	                           transparent 33%, rgba(0, 0, 0, .1) 33%, 
-	                           rgba(0,0, 0, .1) 66%, transparent 66%),
-	   -webkit-linear-gradient(top, 
-	                           rgba(255, 255, 255, .25), 
-	                           rgba(0, 0, 0, .25)),
-	   -webkit-linear-gradient(left, #09c, #f44);
-
-    border-radius: 2px; 
-    background-size: 35px 20px, 100% 100%, 100% 100%;
+  background-color: lightgreen;
+  border-radius: 2px; 
 }
 
 .uploader input[type="file"] {
@@ -147,7 +136,8 @@ progress[value]::-webkit-progress-value {
   margin: 0.5rem 0.5rem 1rem 0.5rem;
   clear: both;
   font-family: inherit;
-  font-weight: 700;
+  text-transform: uppercase;
+  font-weight: 500;
   font-size: 14px;
   text-decoration: none;
   border: none;
@@ -159,8 +149,90 @@ progress[value]::-webkit-progress-value {
   color: #fff;
   transition: all 0.2s ease-in-out;
   background: #1abc9c;
-  border-color: #1abc9c;
   cursor: pointer;
+}
+
+/* loader styles */
+.loading * {
+  display: none;
+}
+
+.dots-loader:not(:required) {
+  opacity: 1;
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -4px;
+  margin-top: -4px;
+  text-indent: -9999px;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: transparent;
+  border-radius: 100%;
+  box-shadow: #f86 -14px -14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+  animation: dots-loader 5s infinite ease-in-out;
+  transform-origin: 50% 50%;
+  transform: scale(1);
+  transition: .3s all;
+}
+
+@keyframes dots-loader {
+  0% {
+    box-shadow: 
+     #f86 -14px -14px 0 7px,
+     #fc6 14px -14px 0 7px,
+     #6d7 14px 14px 0 7px,
+     #4ae -14px 14px 0 7px;
+  }
+  8.33% {
+    box-shadow:
+     #f86 14px -14px 0 7px,
+     #fc6 14px -14px 0 7px,
+     #6d7 14px 14px 0 7px,
+     #4ae -14px 14px 0 7px;
+  }
+  16.67% {
+    box-shadow: #f86 14px 14px 0 7px, #fc6 14px 14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+  }
+  25% {
+    box-shadow: #f86 -14px 14px 0 7px, #fc6 -14px 14px 0 7px, #6d7 -14px 14px 0 7px, #4ae -14px 14px 0 7px;
+  }
+  33.33% {
+    box-shadow: #f86 -14px -14px 0 7px, #fc6 -14px 14px 0 7px, #6d7 -14px -14px 0 7px, #4ae -14px -14px 0 7px;
+  }
+  41.67% {
+    box-shadow: #f86 14px -14px 0 7px, #fc6 -14px 14px 0 7px, #6d7 -14px -14px 0 7px, #4ae 14px -14px 0 7px;
+  }
+  50% {
+    box-shadow: #f86 14px 14px 0 7px, #fc6 -14px 14px 0 7px, #6d7 -14px -14px 0 7px, #4ae 14px -14px 0 7px;
+  }
+  58.33% {
+    box-shadow: #f86 -14px 14px 0 7px, #fc6 -14px 14px 0 7px, #6d7 -14px -14px 0 7px, #4ae 14px -14px 0 7px;
+  }
+  66.67% {
+    box-shadow: #f86 -14px -14px 0 7px, #fc6 -14px -14px 0 7px, #6d7 -14px -14px 0 7px, #4ae 14px -14px 0 7px;
+  }
+  75% {
+    box-shadow: #f86 14px -14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px -14px 0 7px, #4ae 14px -14px 0 7px;
+  }
+  83.33% {
+    box-shadow: #f86 14px 14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae 14px 14px 0 7px;
+  }
+  91.67% {
+    box-shadow: #f86 -14px 14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+  }
+  100% {
+    box-shadow: #f86 -14px -14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+  }
+}
+
+.loaded .dots-loader {
+  opacity: 0;
+  z-index: -1;
+  pointer-events: none;
+  transform: scale(0);
 }
 
 /* url form styles */

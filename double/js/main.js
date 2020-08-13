@@ -4,6 +4,7 @@ let doubleData
 let doubleModelData
 
 async function warmUp() {
+  const content = document.querySelector('loading')
   //upload hidden dummy image to warm up tensors for faster processing on upload
   const inputImgEl = document.getElementById('file-image')
   console.log('Warming face recognition net...')
@@ -14,16 +15,16 @@ async function warmUp() {
     .withFaceLandmarks()
     .withFaceDescriptor()
   console.log(result)
+  content.classList.remove('loading')
+  content.classList.add('loaded')
 }
 
 async function findMatches() {
+  const progressBar = document.getElementById('file-progress')
   const inputImgEl = document.getElementById('file-image')
   const outputImgEl1 = document.getElementById('resultsImg1')
   const outputImgEl2 = document.getElementById('resultsImg2')
   const outputImgEl3 = document.getElementById('resultsImg3')
-
-  console.log('in find matches')
-  console.log(inputImgEl)
 
   const result = await faceapi
     .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
@@ -32,15 +33,15 @@ async function findMatches() {
   if(result) {
     let distArray = []
     const modelLen = doubleModelData.length
+    setMaxProgress(modelLen-1)
     for(let i=0; i<modelLen; i++) {
       let dist = faceapi.euclideanDistance(result.descriptor, doubleModelData[i])
       distArray.push(dist)
+      progressBar.value = i
     }
-    //Get min values 3
     let minDist = distArray.slice()
     minDist = minDist.sort((a,b) => a-b).slice(0,3)
     console.log(minDist)
-    // const minDist = Math.min(...distArray)
     const minIndex1 = distArray.indexOf(minDist[0])
     const minIndex2 = distArray.indexOf(minDist[1])
     const minIndex3 = distArray.indexOf(minDist[2])
@@ -56,7 +57,6 @@ async function findMatches() {
   }
 }
 
-// Output
 function output(msg) {
   let m = document.getElementById('messages');
   m.innerHTML = msg;
@@ -64,7 +64,7 @@ function output(msg) {
 
 async function run() {
   //Load doubles model and data
-  const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
+  const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/doubles.json')
   const doubleModelRes = await axios.get('https://bilboblockins.github.io/double/data/doubles_model.json')
   doubleData = doubleRes.data
   doubleModelData = doubleModelRes.data

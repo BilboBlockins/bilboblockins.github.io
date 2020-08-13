@@ -33,7 +33,7 @@ async function getFaceData() {
     if(actorDataTidy.length) {
       //If a face wasn't found, save tidied list to update actor data
       console.log('Saving tidied actor data...')
-      downloadJSON(actorDataTidy, 'stunt_actors_tidy.json')
+      downloadJSON(actorDataTidy, 'doubles_tidy.json')
     }
     if(faceReadErrors.length) {
       //if there were errors, download file of double pics to remove with tidy-imgs

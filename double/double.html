@@ -3,11 +3,12 @@
 <head>
   <script src="js/face-api.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <title>Double</title>
+  <title>Get Double</title>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="loading">
 
       <form id="file-upload-form" class="uploader">
         <input id="file-upload" type="file" name="fileUpload" accept="image/jpg" />
@@ -31,12 +32,15 @@
 
       <br> 
 
-    </div>
+    
     <div>Results Images:</div>
     <img id="resultsImg1" width="320" src="">
     <img id="resultsImg2" width="320" src="">
     <img id="resultsImg3" width="320" src="">
 
+    <div class="dots-loader"></div>
+
+  </div>
     <!-- <div>test img</div> -->
 
 </body>
@@ -48,71 +52,44 @@
 //file upload js
 function ekUpload() {
   function Init() {
-
-    console.log("Upload Initialised");
-
-    var fileSelect    = document.getElementById('file-upload'),
+    let fileSelect    = document.getElementById('file-upload'),
         fileDrag      = document.getElementById('file-drag'),
-        submitButton  = document.getElementById('submit-button');
+        submitButton  = document.getElementById('submit-button')
 
-    fileSelect.addEventListener('change', fileSelectHandler, false);
-
-    // File Drop
-    fileDrag.addEventListener('dragover', fileDragHover, false);
-    fileDrag.addEventListener('dragleave', fileDragHover, false);
-    fileDrag.addEventListener('drop', fileSelectHandler, false);
+    fileSelect.addEventListener('change', fileSelectHandler, false)
+    fileDrag.addEventListener('dragover', fileDragHover, false)
+    fileDrag.addEventListener('dragleave', fileDragHover, false)
+    fileDrag.addEventListener('drop', fileSelectHandler, false)
   }
 
   function fileDragHover(e) {
-    var fileDrag = document.getElementById('file-drag');
-
+    var fileDrag = document.getElementById('file-drag')
     e.stopPropagation();
     e.preventDefault();
-
-    fileDrag.className = (e.type === 'dragover' ? 'hover' : 'modal-body file-upload');
+    fileDrag.className = (e.type === 'dragover' ? 'hover' : 'modal-body file-upload')
   }
 
   function fileSelectHandler(e) {
-    // Fetch FileList object
     var files = e.target.files || e.dataTransfer.files;
-    // Cancel event and hover styling
     fileDragHover(e)
     parseFile(files[0])
-
     output('Locating best double matches...')
-
-    startMatcher()
-  }
-
-  function startMatcher() {
     findMatches()
-    setMaxProgress(48)
-    let progressBar = document.getElementById('file-progress')
-    let count = 0
-    let intervalId = setInterval(()=>{
-      count++
-      progressBar.value = count
-      if(count===48) {
-        clearInterval(intervalId)
-        output('Matches found!')
-      }
-    }, 200)
   }
 
   function parseFile(file) {
     if(file) {
-    document.getElementById('start').classList.add("hidden");
-    document.getElementById('response').classList.remove("hidden");
-    document.getElementById('notimage').classList.add("hidden");
-    // Thumbnail Preview
-    document.getElementById('file-image').classList.remove("hidden");
-    document.getElementById('file-image').src = URL.createObjectURL(file);
+      document.getElementById('start').classList.add("hidden")
+      document.getElementById('response').classList.remove("hidden")
+      document.getElementById('notimage').classList.add("hidden")
+      document.getElementById('file-image').classList.remove("hidden")
+      document.getElementById('file-image').src = URL.createObjectURL(file)
     } else {
-      document.getElementById('file-image').classList.add("hidden");
-      document.getElementById('notimage').classList.remove("hidden");
-      document.getElementById('start').classList.remove("hidden");
-      document.getElementById('response').classList.add("hidden");
-      document.getElementById("file-upload-form").reset();
+      document.getElementById('file-image').classList.add("hidden")
+      document.getElementById('notimage').classList.remove("hidden")
+      document.getElementById('start').classList.remove("hidden")
+      document.getElementById('response').classList.add("hidden")
+      document.getElementById("file-upload-form").reset()
     }
   }
 
@@ -125,7 +102,7 @@ function ekUpload() {
   if (window.File && window.FileList && window.FileReader) {
     Init();
   } else {
-    document.getElementById('file-drag').style.display = 'none';
+    document.getElementById('file-drag').style.display = 'none'
   }
 }
 ekUpload();
