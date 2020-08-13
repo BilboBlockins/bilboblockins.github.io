@@ -1,10 +1,10 @@
 //Brett Hiebert
 //Get Double Data
 //Nodejs script to get actor data from backstage.com and saves thumbnail images of each.
+//Run tidy data after this script to remove actors without pics
 //Lic: MIT
 //2020
 //=======================
-
 const fs = require('fs')
 const axios = require('axios')
 
@@ -16,9 +16,9 @@ async function run() {
     const doubleData = await getActorData()
     //save data as json
     console.log('Saving...')
-    fs.writeFile(`../data/stunt_actors.json`, JSON.stringify(doubleData), function(err) {
-      if(err) { return console.log(err) }
-      console.log("All actor data was saved")
+    fs.writeFile(`../data/doubles.json`, JSON.stringify(doubleData), function(err) {
+      if(err) { throw err}
+      console.log("All actor data was saved.")
       console.log('Done.')
     })
   } catch(error) {
@@ -30,16 +30,16 @@ async function getActorData() {
   let results = []
   let page = 1
   try {
-    //Until the next page is null
+    //Until the next page is null or set page length
     while(page) {
       console.log('On page: ', page)
-      let res = await axios.get(`https://www.backstage.com/talent/async/search/?assets=headshot_available&page=${page}&size=48&skill=23`)
+      let res = await axios.get(`https://www.backstage.com/talent/async/search/?assets=headshot_available&page=${page}&size=48`)
       let data = res.data
       let actorList = data.items
       let actorsOnPage = []
       //loop through results
       for (let actor of actorList) {
-        //collect only important data
+        //collect important data
         let imageUrl = actor.primary_headshot
         let profileUrl = `https://www.backstage.com${actor.talent_profile_url}`
         let actorId = actor.talent_profile_id
@@ -57,9 +57,15 @@ async function getActorData() {
         actorsOnPage.push(actorObj)
         //download actor image
         downloadImage(imageUrl, actorId)
+        //wait a bit
+        await sleep(200)
       }
       //add to results list
       results = results.concat(actorsOnPage)
+      //save running file in case of crash
+      fs.writeFile(`../data/doubles_running.json`, JSON.stringify(results), function(err) {
+        if(err) { throw err}
+      })
       //assign next page
       page = data.next_page
     }
@@ -71,8 +77,29 @@ async function getActorData() {
 }
 
 async function downloadImage(url, id) {
-    const response = await axios({url, method: 'get', responseType: 'stream'})
-    await response.data.pipe(fs.createWriteStream(`../images/doubles/${id}.jpg`))
-    console.log(`Image ${id} saved...`)
+  try{
+    const response = await axios({url, method: 'get', responseType: 'arraybuffer'})
+    const buffer = Buffer.from(response.data, 'binary')
+    const jpgCheck = new Uint8Array(buffer)
+    const c1 = jpgCheck[0]
+    const c2 = jpgCheck[1]
+    //check to make sure image is jpg
+    if(c1===255 && c2 === 216) {
+      fs.writeFile(`../images/doubles/${id}.jpg`, jpgCheck, function(err) {
+        if(err) { throw err }
+        console.log(`Image ${id} saved...`)
+      })
+    } else {
+      console.log(`Image ${id} not jpg, not saved...`)
+    } 
+  } catch(error) {
+    console.log('Error: ', error)
+  }
 }
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  })
+} 
         

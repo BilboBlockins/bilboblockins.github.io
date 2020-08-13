@@ -1,5 +1,5 @@
-let inputSize = 320
-let scoreThreshold = .3
+let inputSize = 416
+let scoreThreshold = .4
 let doubleData
 let doubleModelData
 

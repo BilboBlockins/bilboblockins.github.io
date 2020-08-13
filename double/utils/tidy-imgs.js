@@ -8,7 +8,6 @@ run()
 function run() {
   //Loop through marked to remove list
   removeImgs(removeData)
-
 }
 
 function removeImgs(array) {

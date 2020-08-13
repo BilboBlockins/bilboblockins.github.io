@@ -2,10 +2,10 @@ async function getFaceData() {
     const faceDataOut = []
     const faceReadErrors = []
     const actorDataTidy = []
-    const inputSize = 320
-    const scoreThreshold = 0.3
+    const inputSize = 416
+    const scoreThreshold = 0.4
     const inputImgEl = document.querySelector('#refImg')
-    const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/stunt_actors.json')
+    const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/doubles.json')
     const doubleData = doubleRes.data
   
     for(let i=0; i<doubleData.length; i++) {
@@ -36,7 +36,7 @@ async function getFaceData() {
       downloadJSON(actorDataTidy, 'stunt_actors_tidy.json')
     }
     if(faceReadErrors.length) {
-      //if there were errors, download file of double pics to remove
+      //if there were errors, download file of double pics to remove with tidy-imgs
       console.log('Saving face read errors...')
       downloadJSON(faceReadErrors, 'doubles_to_remove.json')
     }
