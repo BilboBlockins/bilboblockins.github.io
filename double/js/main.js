@@ -5,7 +5,7 @@ let doubleModelData
 
 async function warmUp() {
   const content = document.querySelector('.loading')
-  const loader = document.querySelector('load')
+  const loader = document.querySelector('.load')
   //upload hidden dummy image to warm up tensors for faster processing on upload
   const inputImgEl = document.getElementById('file-image')
   console.log('Warming face recognition net...')
