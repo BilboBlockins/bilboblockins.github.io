@@ -2,8 +2,8 @@ async function getFaceData() {
     const faceDataOut = []
     const faceReadErrors = []
     const actorDataTidy = []
-    const inputSize = 512
-    const scoreThreshold = 0.4
+    const inputSize = 416
+    const scoreThreshold = 0.35
     const inputImgEl = document.querySelector('#refImg')
     const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/doubles.json')
     const doubleData = doubleRes.data
@@ -43,6 +43,10 @@ async function getFaceData() {
     }
     return faceDataOut
   }
+
+  async function getFace() {
+
+  }
   
   function downloadJSON(obj, fileName) {
       let jsonStr = JSON.stringify(obj)
@@ -52,6 +56,12 @@ async function getFaceData() {
       a.download = fileName
       a.click()
   }
+
+  function sleep(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    })
+  } 
   
   async function run() {
     await faceapi.loadTinyFaceDetectorModel('/double/weights/')
