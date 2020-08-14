@@ -12,6 +12,7 @@ async function getFaceData() {
       try {
         console.log(`${i} Processing `, doubleData[i].name, '...')
         let imgPath = '../' + doubleData[i].image_path
+        inputImgEl.onerror = () => { throw 'Image didn\'t load' }
         inputImgEl.src = imgPath
         const faceData = await faceapi
           .detectSingleFace(inputImgEl, new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold}))
