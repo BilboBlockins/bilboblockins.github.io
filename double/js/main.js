@@ -70,7 +70,7 @@ function setMaxProgress(num) {
 async function run() {
   //Load doubles model and data
   const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/doubles.json')
-  const doubleModelRes = await axios.get('https://bilboblockins.github.io/double/data/doubles_model.json')
+  const doubleModelRes = await axios.get('https://bilboblockins.github.io/double/data/face_model.json')
   doubleData = doubleRes.data
   doubleModelData = doubleModelRes.data
   // load face detection, face landmark model and face recognition models
