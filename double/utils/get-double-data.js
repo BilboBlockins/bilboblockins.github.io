@@ -29,9 +29,10 @@ async function run() {
 async function getActorData() {
   let results = []
   let page = 1
+  let pageTo = 200
   try {
     //Until the next page is null or set page length
-    while(page) {
+    while(page && page <= pageTo) {
       console.log('On page: ', page)
       let res = await axios.get(`https://www.backstage.com/talent/async/search/?assets=headshot_available&page=${page}&size=48`)
       let data = res.data

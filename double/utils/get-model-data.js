@@ -2,8 +2,8 @@ async function getFaceData() {
     const faceDataOut = []
     const faceReadErrors = []
     const actorDataTidy = []
-    const inputSize = 384
-    const scoreThreshold = 0.3
+    const inputSize = 512
+    const scoreThreshold = 0.4
     const inputImgEl = document.querySelector('#refImg')
     const doubleRes = await axios.get('https://bilboblockins.github.io/double/data/doubles.json')
     const doubleData = doubleRes.data
