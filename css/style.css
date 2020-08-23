@@ -1340,6 +1340,7 @@ h1, h2, h3, h4, h5,
   .img-sm-h {
     grid-column: 1 / 4;
     grid-row: 3 / 4;
+    display: unset;
   }
 }
 
