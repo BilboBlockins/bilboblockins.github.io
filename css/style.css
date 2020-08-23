@@ -1318,6 +1318,7 @@ h1, h2, h3, h4, h5,
   .img-sm-h {
     grid-column: 0;
     grid-row: 0;
+    display: none;
   }
 
 }
